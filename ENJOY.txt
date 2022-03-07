@@ -1,0 +1,104 @@
+# Practical 1: Stopword Removal
+
+import nltk
+from nltk.corpus import stopwords
+from nltk.tokenize import word_tokenize
+
+file = open("C:\\Users\\SATISH\\3D Objects\\IR\\textFile1.txt")
+line = file.read()
+print("Actual sentence: ", line)
+
+stop = set(stopwords.words('english'))
+token = word_tokenize(line)
+
+a = ''
+b = ''
+
+for w in token:
+    if w not in stop:
+        a = a + w + ' '
+    else:
+        b = b + w + ' '
+
+file2 = open("C:\\Users\\SATISH\\3D Objects\\IR\\textFile1.txt", "w")
+file2.write(a)
+
+print("Stopwords removal: ", a)
+print("Actual Stopwords: ", b)
+
+
+
+# Practical 2: Incidence Matrix
+
+import pandas as pd
+from sklearn.feature_extraction.text import CountVectorizer
+import numpy as np
+
+docs = ['why hello why there', 'omg hello pony', 'she went there omg']
+
+# file1=open(r"D:\TYBSC SEM6\P3 Information Retrieval\Practice Practical\Incidence Matrix\file1.txt")
+# a1=file1.read()
+# docs.append(a1)
+
+vec = CountVectorizer()
+x = vec.fit_transform(docs)
+# print(x)
+# print(x.toarray())
+
+df = pd.DataFrame(x.toarray(), columns = vec.get_feature_names())
+# print(df)
+
+query = input("Enter the query: ")
+list2 = query.split()
+list3 = []
+list4 = []
+
+for i in range(len(list2)):
+    if i % 2 == 0:
+        list3.append(list2[i])
+    else:
+        list4.append(list2[i])
+print(list3)
+print(list4)
+
+x = []
+print(df.shape[0])
+print(df.shape[1])
+
+for i in range(df.shape[0]-1):
+    for j in range(df.shape[1]):
+        if(df.loc[i][j]>1):
+            df.loc[i][j] = 1
+print(df)
+
+k = list4[0]
+if(k=='&'):
+    ans = np.bitwise_and(df.loc[:,list3[0]],df.loc[:,list3[1]])
+if(k=='|'):
+    ans = np.bitwise_or(df.loc[:,list3[0]],df.loc[:,list3[1]])
+    
+l = list4[1]
+if(l=='&'):
+    ans = np.bitwise_and(df.loc[:,list3[0]],ans)
+if(l=='|'):
+    ans = np.bitwise_or(df.loc[:,list3[0]],ans)
+    
+ans1 = []
+ans1.append(ans)
+ans2 = list(ans1)
+list6 = []
+
+for i in range(len(ans1)):
+    ans1[i] = list(ans1[i])
+print(ans1)
+
+count = 0
+for i in range(len(ans1[0])):
+    if(ans1[0][i] == 1):
+        count += 1
+        print("Present in Document Number : ",i)
+        
+print("Total documents: ", count)
+
+
+
