@@ -1,0 +1,10 @@
+# RSS
+
+import feedparser 
+NewsFeed = feedparser.parse("https://www.moneycontrol.com/rss/budget2013.xml") 
+for i in range(10): 
+    entry = NewsFeed.entries[i] 
+    print('Post Title :',entry.title) 
+    print('Published:',entry.published) 
+    print('Link:',entry.link) 
+    print()

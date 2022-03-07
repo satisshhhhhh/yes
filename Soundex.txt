@@ -1,0 +1,60 @@
+ ''' Step 1- Save the first letter. Remove all occurrences of a, e, i, o, u, y, h, w.
+Step 2- Replace all consonants (include the first letter) with digits.
+b, f, p, v → 1
+
+c, g, j, k, q, s, x, z → 2
+
+d, t → 3
+
+
+l → 4
+
+m, n → 5
+
+r → 6
+
+
+Step 3- Replace all adjacent same digits with one digit.
+Step 4- If the saved letter’s digit is the same the resulting first digit, remove the digit (keep the letter).
+Step 5- Append 3 zeros if result contains less than 3 digits. Remove all except first letter and 3 digits after it.'''
+
+
+
+def soundex(string):
+    result = ""
+    ref="ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+    ref1="01230120022455012623010202"
+
+    result+= string[0]
+    
+    for i in range(1,len(string)):
+        
+        for j in range(len(ref)):
+            
+            if(string[i]==ref[j]):
+                
+                result+=ref1[j]
+    
+    return result
+
+def remove1(name):
+    value = name[0]
+    for i in range(1,len(name)-1):
+        
+        if name[i] != name[i+1]:
+            
+            value +=name[i]
+
+    value+=name[len(name)-1]
+    
+    value1=value.replace("0","")
+    if(len(value)<=4):
+        b=4-len(value1)
+        j="0"*b
+        value1+=j
+    return value1
+
+string=input("Enter name")
+result1=soundex(string.upper())
+print(result1)
+print(remove1(result1))

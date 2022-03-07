@@ -1,0 +1,46 @@
+# Similarity Betweeen Documents
+
+def kgram(text,k):
+    m=0
+    n=k
+    l=[]
+    while(n<=len(text)):
+        l1=" "
+        for i in range(m,n):
+         
+            l1 +=text[i]
+        l.append(l1)
+        m+=1
+        n+=1
+    print(l)
+    return l
+
+def j_card_sim(j1,j2):
+    j_inter=j1.intersection(j2)
+    print(j_inter)
+    j_union=j1.union(j2)
+    print(j_union)
+    ratio = len(j_inter)/len(j_union)
+    print(ratio)
+    return(ratio)
+
+a=input("enter the values of a")
+b= input("enter the values of b")
+
+k=int(input("enter k value"))
+
+jcard1=kgram(a,k)
+jcard2=kgram(b,k)
+
+
+jcard1set =set(jcard1)
+
+jcard2set=set(jcard2)
+print(jcard1set)
+print(jcard2set)
+
+z=j_card_sim(jcard1set,jcard2set)
+if(z>=0.8):
+    print("simi")
+else:
+    print('not simi')

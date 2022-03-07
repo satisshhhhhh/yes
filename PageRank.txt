@@ -1,0 +1,43 @@
+#Practical 3
+
+import numpy as np
+import scipy as sc
+import pandas as pd
+from fractions import Fraction
+
+def display_format(my_vector,my_decimal):
+    return np.round((my_vector).astype(float),decimals=my_decimal)
+
+my_dp = Fraction(1,3)
+print(my_dp)
+
+Mat = np.matrix([[Fraction(1,2),Fraction(1,2),0],
+                [Fraction(1,2),0,1],
+                [0,Fraction(1,2),0]])
+
+print(Mat)
+Ex = np.zeros((3,3))
+print(Ex)
+Ex[:] = my_dp
+print(Ex)
+
+beta = 0.7
+A = beta * Mat + ((1-beta) * Ex)
+r = np.matrix([my_dp, my_dp, my_dp])
+print(r)
+
+r = np.transpose(r)
+print(r)
+
+previous_r = r
+counter_variable=0
+while True:
+    r=A*r
+    m=display_format(r,4)
+    n=display_format(previous_r,4)
+    if(abs(r-previous_r)<=0.0001).all():
+        break
+    previous_r=r
+    counter_variable+=1
+    
+print ("Final:\n", display_format(r,4))

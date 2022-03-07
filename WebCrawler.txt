@@ -1,0 +1,18 @@
+# Web Crawler
+
+import requests
+from bs4 import BeautifulSoup
+
+def web(page, webUrl):
+    if (page > 0):
+        url = webUrl
+        code = requests.get(url)
+        plain = code.text
+        s = BeautifulSoup(plain, "html.parser")
+        for link in s.findAll('img'):
+            tet = link.getText()
+            print(tet)
+            print(link['src'])
+            print()
+            
+web(2, "https://www.moneycontrol.com/")
